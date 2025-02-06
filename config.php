@@ -1,55 +1,78 @@
 <?php
-// include('function.php');
 
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
 	$url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 } else {
 	$url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 }
-// $url_components = parse_url($url);
+$url_components = parse_url($url);
 
-//  $actual_link = "http://localhost/brand/techigator.ae/";
+//  $actual_link = "http://localhost/brand/virtualassistantandmarketingpartners.com/";
 $actual_link = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . '/';
 
-define('ADMIN_EMAIL', 'info@techigator.ae');
-define('PHONE', '+971 56 600 7598');
-define('PHONE_HREF', 'tel:+971566007598');
-define('PHONE02', '(786) 438-3297');
-define('PHONE_HREF02', 'tel:7864383297');
-define('EMAIL', 'info@techigator.ae');
-define('EMAIL_HREF', 'mailto:info@techigator.ae');
-define('CONTACT_EMAIL', 'info@techigator.ae');
-define('CONTACT_EMAIL_HREF', 'mailto:info@techigator.ae');
-define('ADDRESS', 'Tower, Ithraa Plaza - Office #805 8th - Dubai - United Arab Emirates');
+define('ADMIN_EMAIL', 'info@virtualassistantandmarketingpartners.com');
+define('PHONE', '+1 (000) 000 0000');
+define('PHONE_HREF', '#');
+// define('PHONE02', '(786) 438-3297');
+// define('PHONE_HREF02', 'tel:7864383297');
+define('EMAIL', 'info@virtualassistantandmarketingpartners.com');
+define('EMAIL_HREF', 'mailto:info@virtualassistantandmarketingpartners.com');
+// define('CONTACT_EMAIL', 'info@virtualassistantandmarketingpartners.com');
+// define('CONTACT_EMAIL_HREF', 'mailto:info@virtualassistantandmarketingpartners.com');
+define('ADDRESS', 'New York, USA');
 // define('ADDRESS_HREF', 'https://goo.gl/maps/u8eoXL99pw7bfwhN7');
-define('WEBSITE_NAME', 'Techigator AE');
+define('WEBSITE_NAME', 'Virtual Assistant and Marketing Partners');
 // define('WEBSITE_NAME_PLURAL', "Designs Cube's");
-define('WEBSITE_LOGO', 'https://www.techigator.ae/assets/images/logo.webp');
+define('WEBSITE_LOGO', $actual_link . 'assets/images/logo.webp');
 
-// echo '<pre>';
-// print_r();
-// exit;
+// Minify CSS file
+// X============X============X
+function minifyCSS($css)
+{
+	// Remove comments
+	$css = preg_replace('/\/\*.*?\*\//s', '', $css);
+	// Remove whitespace
+	$css = preg_replace('/\s+/', ' ', $css);
+	$css = str_replace([' {', '{', ' }', '}'], ['{', '{', '}', '}'], $css);
+	// Remove semicolons before closing braces
+	$css = preg_replace('/;}/', '}', $css);
+	return trim($css);
+}
 
-// if($_SERVER['HTTP_HOST'] != 'localhost')
-// {
-// 	///------ Get Client IP & Address --------
-// 	$get_client_ip  =   get_client_ip();    
-// 	/// ------ End Code ----------------------------
-// }
-// else{
-// 	///------ Get Client IP & Address --------
-// 	$get_client_ip  =   '103.217.177.174';
-// }
-
-
-// $regionDetail   =   get_region($get_client_ip);
-
-// $country        =   $regionDetail['country'];
-// $city           =   $regionDetail['city'];
-// $state          =   $regionDetail['state'];
-// $address        =   $city.', '.$country;
+$cssContent = file_get_contents(__DIR__ . '../../assets/css/custom.css');
+$minifiedCSS = minifyCSS($cssContent);
+file_put_contents(__DIR__ . '../../assets/css/custom.min.css', $minifiedCSS);
+// X============X============X
+// Minify CSS file
 
 
+// X============X============X============X============X
+
+
+// Minify JS file
+// X============X============X
+function minifyJS($js)
+{
+	$js = preg_replace('/\/\*.*?\*\//s', '', $js);
+	$js = preg_replace('/\/\/[^\n]*\n/', '', $js);
+
+	$js = preg_replace('/\s+/', ' ', $js);
+	$js = preg_replace('/\s?([{};:,+])\s?/', '$1', $js);
+
+	$js = rtrim($js, ';');
+	return $js;
+}
+
+$jsContent = file_get_contents(__DIR__ . '../../assets/js/custom.js');
+$minifiedJS = minifyJS($jsContent);
+file_put_contents(__DIR__ . '../../assets/js/custom.min.js', $minifiedJS);
+// X============X============X
+// Minify JS file
+
+// X============X============X============X============X
+
+// Minify HTML file
+// X============X============X
 function minifyHTML($html)
 {
 	// Remove extra white spaces and new lines
@@ -73,6 +96,7 @@ function minifyHTML($html)
 
 
 if (!ob_start("ob_gzhandler")) {
-    ob_start();
-} 
-?>
+	ob_start();
+}
+// X============X============X
+// Minify HTML file
