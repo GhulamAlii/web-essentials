@@ -35,7 +35,7 @@
         <div class="col-lg-6 col-md-6">
             <div class="form-group">
                 <label class="mb-2" for="phone">phone <span>*</span></label>
-                <input type="number" id="phone" name="phone" minlength="9" maxlength="12" placeholder="000-000-000" required>
+                <input type="number" id="phone" name="phone" minlength="9" maxlength="12" onkeypress="return /[0-9]/i.test(event.key)" pattern="[1-9]{1}[0-9]{9}" placeholder="000-000-000" required>
             </div>
         </div>
         <div class="col-lg-12">
